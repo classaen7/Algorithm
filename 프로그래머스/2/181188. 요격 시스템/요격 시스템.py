@@ -1,7 +1,7 @@
 import collections 
 
 def solution(targets):
-    targets.sort(key=lambda x: (x[1], x[0]))
+    targets.sort(key=lambda x: (x[1]))
     deq_t = collections.deque(targets)
     ans = 0
 

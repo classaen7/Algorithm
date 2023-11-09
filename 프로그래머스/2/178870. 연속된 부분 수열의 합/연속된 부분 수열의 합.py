@@ -4,29 +4,27 @@ def solution(sequence, k):
     
     s,e = 0,0
     re = []                                     # 정답 후보를 저장
-    summ = sequence[0]
+    sub_sum = sequence[0]
     
     # 합이 크면 : s+1 = summ - sequence[s]
     # 합이 작으면 : e+1 = summ + sequence[e]
     
     while e < len(sequence):
-        if summ == k:                           # 투포인터의 부분합 확인
+        if sub_sum == k:                           # 투포인터의 부분합 확인
             if not re or re[1]-re[0] > e-s:     # 정답 후보와 비교 (길이가 더 짧은지, 시작점에 대한 비교는 불필요)
                 re = [s,e]                      # 갱신
-            summ -= sequence[s]
+            sub_sum -= sequence[s]
             s += 1
         
         # 부분합이 k와 다른경우 
-        if summ < k:                        
+        if sub_sum < k:                        
             e += 1
             if e < len(sequence):
-                summ += sequence[e]
+                sub_sum += sequence[e]
             
-        elif summ > k:
-            summ -= sequence[s]
+        elif sub_sum > k:
+            sub_sum -= sequence[s]
             s += 1
 
     return re
-        
-        
-        
+

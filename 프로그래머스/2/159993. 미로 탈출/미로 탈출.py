@@ -8,14 +8,17 @@ def solution(maps):
     """
     move = [[1,0], [-1,0], [0,1], [0,-1]]
     
-    visited = [ [0 for _ in range(len(maps[0]))] for _ in range(len(maps))]
+    # visited = [ [0 for _ in range(len(maps[0]))] for _ in range(len(maps))]
     
     for i in range(len(maps)):
+        maps[i] = list(maps[i])
         for j in range(len(maps[0])):
             if maps[i][j] == 'L':
-                visited[i][j] = 1
+                # visited[i][j] = 1
+                maps[i][j] = 'X'
                 deq = collections.deque([[i,j]])
-
+                
+    
     ltos, ltoe = 0, 0  
     step = 0
 
@@ -23,18 +26,22 @@ def solution(maps):
         step += 1
         for _ in range(len(deq)):
             r,c = deq.popleft()
-            print(r,c)
+
             for n,m in move:
                 new_r, new_c = r+n, c+m
-                if 0 <= new_r < len(maps) and 0 <= new_c < len(maps[0]) and visited[new_r][new_c]==0 and maps[new_r][new_c]!='X':
-                    visited[new_r][new_c] = 1
+                
+                # and visited[new_r][new_c]==0
+                
+                if 0 <= new_r < len(maps) and 0 <= new_c < len(maps[0])  and maps[new_r][new_c]!='X':
+                    # visited[new_r][new_c] = 1
+                    
                     
                     if maps[new_r][new_c] == 'S':
                         ltos = step    
                     elif maps[new_r][new_c] == 'E':
                         print(step)
                         ltoe = step
-                        
+                    maps[new_r][new_c] = 'X'
                     deq.append([new_r, new_c])
 
     return ltos + ltoe if ltos!=0 and ltoe!= 0 else -1

@@ -22,8 +22,8 @@ def solve():
 
 
     def dfs(lst, p_node):
-        if hist[p_node] == 0:
-            return
+        # if hist[p_node] == 0:
+        #     return
         for n in lst:
             if hist[n] == 0:
                 hist[n] = p_node

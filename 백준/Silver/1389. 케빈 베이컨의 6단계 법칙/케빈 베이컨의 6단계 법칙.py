@@ -7,33 +7,39 @@ sys.setrecursionlimit(10**6)
 def solve():
     N, M = map(int, sys.stdin.readline().split())
 
-    
-    mtx = [[5001 if i!=j else 0 for j in range(N+1)] for i in range(N+1)]
-
-    
+    import collections
+    graph = collections.defaultdict(list)
 
     for _ in range(M):
-        i, j = map(int, sys.stdin.readline().split())
-        mtx[i][j] = 1
-        mtx[j][i] = 1
-
-
-    for k in range(1,N+1):
-        for i in range(1,N+1):
-            for j in range(1,N+1):
-                mtx[i][j] = min(mtx[i][j], mtx[i][k]+ mtx[k][j])
-
-    score = []
-    for i in range(1,N+1):
-        score.append([i, sum(mtx[i][1:])])
+        a, b = map(int, sys.stdin.readline().split())
+        graph[a].append(b)
+        graph[b].append(a)
     
-    score.sort(key=lambda x: (x[1],x[0]))
-    return score[0][0]
+    def bfs(s):
+        re = [-1] * (N+1)
+        
+        deq = collections.deque([s])
+
+        while deq:
+            node = deq.popleft()
+
+            for n in graph[node]:
+                if re[n] == -1:
+                    re[n] = re[node] + 1
+                    deq.append(n)
+
+        return sum(re)
+
+
+
+    ans = []
+    for i in range(1, N+1):
+        ans.append(bfs(i))
     
 
+    return ans.index(min(ans))+1
 
-
-
+    
 print(solve())
 # solve()
 

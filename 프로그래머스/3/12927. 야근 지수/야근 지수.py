@@ -6,13 +6,13 @@ def solution(n, works):
         heapq.heappush(heap, -w)
     
     for _ in range(n):  
-        x = heapq.heappop(heap)
-        x += 1
+        x = heapq.heappop(heap) + 1
+        
         if x != 0:
             heapq.heappush(heap, x)
         
         if len(heap)==0:
-            break
+            return 0
     
     answer = 0
 

@@ -1,29 +1,23 @@
+from collections import deque
+
 def solution(begin, target, words):
-    idx = -1
-    for i in range(len(words)):
-        if words[i] == target:
-            idx = i
-            break
-    if idx== -1:
-        return 0    
     
-    lst = [begin] + words 
+    visit = [begin]
+    deq = deque([begin])
+    dist = 0
     
-    dist = [[float('Inf') for _ in lst] for _ in lst]
-    
-    for i in range(len(lst)):
-        for j in range(len(lst)):
-            if i==j:
-                dist[i][j] = 0
-            elif sum(1 for a,b in zip(lst[i], lst[j]) if a!=b) == 1:
-                dist[i][j] = 1
-                
-    
-    for k in range(len(lst)):
-        for i in range(len(lst)):
-            for j in range(len(lst)):
-                if dist[i][k] + dist[k][j] < dist[i][j]:
-                    dist[i][j] = dist[i][k] + dist[k][j] 
-    
-    return 0 if dist[0][idx+1] == float('Inf') else dist[0][idx+1]
+    while deq:
+        dist += 1
+        
+        for _ in range(len(deq)):
+            node = deq.popleft()
+            
+            for w in words:
+                if w not in visit and sum(1 for a,b in zip(node, w) if a!=b)==1:
+                    if w == target:
+                        return dist
+                    visit.append(w)
+                    deq.append(w)
+        
+    return 0
     
